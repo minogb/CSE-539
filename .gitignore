@@ -1,7 +1,7 @@
 # Ignore volatile UI-related state
 .obsidian/workspace.json
 .obsidian/app.json
-
+.obsidian/.
 # Ignore system and editor files (more specific to what I do)
 .vscode/
 .idea/
