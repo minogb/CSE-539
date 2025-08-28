@@ -40,7 +40,7 @@ Permute substitute network, aes uses this, Block -> permute -> block. break the 
 Feistal function/cipher take in the input for a round, divide it into two. Input R maps to the left of the output and also feeds into a function with the key. The left part is then xored with that function output and then mapped to the right part of the output. the function is a non linear feistel function, use pbox or sbox. Feistal function is used heavily in DES.
 a xor b = c. a xor c = b.
 
-Sbox = subsitution box
+Sbox = substitution box
 Pbox = permutation box
 # DES
 replaced by [[#AES]]
