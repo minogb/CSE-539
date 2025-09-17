@@ -9,7 +9,6 @@ Given one value find another value with the same hash. This is about 2^n
 Given two values find any pair of values that have the same hash. This is about 2^(n/2)
 
 minimum of 256 to create a 128 bit strong hash to avoid this attack.
-# RSA
 
 # MD5
 Most common hash function is MD5, invented by Rivest. There have been other versions but they all had issues and they kept being fixed culminating in MD5, today MD5 is known to be broken and has been replaced [[#SHA]], secure hash algorithm.

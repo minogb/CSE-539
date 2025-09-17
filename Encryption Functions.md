@@ -1,36 +1,46 @@
-also know as a one way trapdoor function as once executed it cannot go back, but there is a secrete trapdoor to go back.
-This function is lossless as the output is not smaller then the input.
-Jumble encryption, substitute cyphers, ect... how they were jumbled or subsisted is the secrete trap door. Simplistic functions like these often have correlation between the output and input.
-The use of keys allow a two way encryption decryption, another thing that is not present in hash functions.
-Symmetric encryption use the same key for encryption and decryption. asymmetric use a public (decryption) and private (encryption) key. For every private key there is exactly one public key.
-Symmetric encryption are often ad hawk and can use any technique almost at random and don't require much number theory to design and can use things like lookup tables and often use different algorithms to encrypt and decrypt. Hard to described, easy to execute.
-Asymmetric encryption are very number theory derived and are often more simple but are more computational difficult.  Easy to describe, hard toe execute.
-Two kinds of symmetric encryption. Block and stream. Stream encrypts on bit at a time. Input-> (random number (key is seed)) and xored -> output. RC4 uses this.
-Polyalphabetic cypher -  stream encryption
-Monoalphabetic cypher - block encryption, can have repeated blocks, but because it uses blocks not single characters it is almost impossible.
-# Terms
+Encryption functions are two way functions where you can only get out of the trap with secrete knowledge. This has led it to be also known as the one way trapdoor, where knowledge of the secret trapdoor is required to 'escape'. This function is also require dot be lossless as such the output is always greater than or equal to the output in length. There can be many ways to create the encryption such as jumbling or substitution.
+There two main ways to achieve the secret: [[#Symmetric Encryption|symmetric]] or [[#Asymmetric Encryption|asymmetric]] with a wide verify of encryption [[#Techniques]].
+The strength of the cypher is measured with its key strength. Normally this is 2^n, however due to birthday attacks this is actually 2^(n/2).
+# Symmetric Encryption
+This method uses the same key to encrypt and decrypt values and is the most common historically. It is also easier to implement adhawk [[#Techniques]]. While simpler this also makes them faster and are often used when transmitting larger amounts of data. Symmetric can be completed with stream or block cyphers and are often initialized with [[Number Theory#CSPRNG|random value]].
+# Asymmetric Encryption
+This form of encryption is newer and relies on a lot of [[Number Theory]], primarily including large numbers, and prime numbers.
+# Cyphers
+## Polyalphabetic
+Values are encrypted on at a time such as with ceaser or visionare and are considired stream cyphers.
+## Monoalphabetic
+block encryption, can have repeated blocks, but because it uses blocks not single characters it is almost impossible.
+# Techniques
+## Table
+## Number Theory
+## Substitution
+## XOR
 ## EBC
 Electronic Code Book -> mono
 ## CBC 
-Cipher Block Changing. Input ->< key -> output. can be changed to input->key -> xor (init vector, static) -> ouput. The current round output is the init vector of the next.
-## Key Strength
-How much work do you have to do to brute force the key. 2^n. it is hard to prove that this is the actual strength. multiple keys that create the same output reduce the key strength.
-DES is believed to be 2^56 strong despite being week to brute force. There are some known keys that are bad but this does not change the overall strength
+Cipher Block Changing.  Take the plain text and then xor it with an initialization vector. Then use a block cypher with a key to create cypher text. Every consecutive block uses the last block cipher text as the initialization vector.
+## S-BOX
+This is an example recipe for generating an sbox
+* No output bit of an sbox should be too clos to a linear function of the input
+* If l and r bits are fixed and 4 middle bits are varied, each possible 4 bit result is obtained once
+* 2 inputs vary in 1 bit, output varies in 2 bits
+* 2 inputs vary in 2 middle bits, the output varies in at least 2 bits
+* 2 inputs are different on 1st 2bits and the same on hte last two bits, the ouput is different.
+* ect....
+## P-BOX
+## Expansion
+Feistel Function - Expansion of the 32 bit data to a 48 bit by shifting. xored with the key. compressed with an sbox and ran through a pbox.
+## Contraction
+
+# Terms
+
 ## Avalanche effect
 1 bit change in input causes a large change in the output.
 1 bit change in key causes a large change in the output.
-## Cryptanalyses
-Find weaknesses in a cipher. at its most basic it is cipher text only, given cipher text only find the key or plain text.
-Known plain text attack. Using the plain and cipher can you find the key?
-Linear cryptanalysis and diff cryptanalysis the attacker chooses the plain text.
-differential, keep changing the input to see if you can reverse engineer the key.
-## Steganography
-not cryptography this is hiding data. Great way to provide plausibility of saying there is no hidden message when combined with cryptography.
-Input -> secrete algorithm -> output. 
 ## Block Encryption
 Going from plain text to cipher using a key. Assuming Block Encryption.
 Block Encryption says plaintext size is fixed (block). n bits -> encryptor -> n bits output and key has n bits. The n bit input is sacred the other things can change. Larger plain text then the input block are just feed in as blocks after the other.
-Jumble -> permute. Use aa in put and move it to another part in the block using a table to lookup with a key to find the output location. The position of the bit is change d in the input before encryption
+Jumble -> permute. Use an input and move it to another part in the block using a table to lookup with a key to find the output location. The position of the bit is change d in the input before encryption
 Substitute if A then put B.
 These types of methods are used in symmetric cypher and are adhock.
 Shannon says encryption is built on two principles confusion and diffusion. confusion is related to permutation and diffusion is related to substitution but these mappings can be differed either way.
@@ -39,9 +49,11 @@ Diffusion says changing on bit of the input causes a change in 50% of the output
 Permute substitute network, aes uses this, Block -> permute -> block. break the output block into smaller block. Use a table to substitute the output. That whole sequence is called a 'round'.
 Feistal function/cipher take in the input for a round, divide it into two. Input R maps to the left of the output and also feeds into a function with the key. The left part is then xored with that function output and then mapped to the right part of the output. the function is a non linear feistel function, use pbox or sbox. Feistal function is used heavily in DES.
 a xor b = c. a xor c = b.
-
-Sbox = substitution box
-Pbox = permutation box
+## Key Scheduling
+Key expansion or key scheduling, inital key expanded to many keys one per round, each 16 bits.
+Rotate, shift, and rcon for each round key. each round key is done the same to get the next round key. Generates 10 for 128 bit key size, 12 rounds for 192 key size, 14 for 256 bits.
+### RCON
+R constant, multiplication involving a bunch of constants.
 # DES
 replaced by [[#AES]]
 Data Encryption Standard ~ 1973 NIST issued RFP in the winner "Lucifer" by IBM Lucifer was modified by NSA to DES.
@@ -57,21 +69,10 @@ Left is xored with the right block that has been ran through a Feistel function 
 The round key is derived from the 56 bit key to get 16 bit sub keys. each master key can generate 16 total keys. each half of the master key is shifted left or right in a circular rotation the compressed toa 48 bit round key. 
 Decipher due to the properties of xor on the right block can be used to xor the left other with the use of the key.
 AES is way faster than 3DES which is the secure way to use DES. First pass with k1 to encrypt then k2 to decrypt then k3 to encrypt
-## Notes on S Boxes
-This is an example recipe for generating an sbox
-* No output bit of an sbox should be too clos to a linear function of the input
-* If l and r bits are fixed and 4 middle bits are varied, each possible 4 bit result is obtained once
-* 2 inputs vary in 1 bit, output varies in 2 bits
-* 2 inputs vary in 2 middle bits, the output varies in at least 2 bits
-* 2 inputs are different on 1st 2bits and the same on hte last two bits, the ouput is different.
-* ect....
-
-## Feistel function
-Expansion of the 32 bit data to a 48 bit by shifting. xored with the key. compressed with an sbox and ran through a pbox.
 ## Key scheduling
 Take each byte one bit is a parity bit. This was designed to detect potential errors in hardware.
 # RSA
-Also known as ECC.
+Also known as ECC. and the foundation of #PKI - public key infrastructure 
 First known open source algorithm is DES, digital encryption standard. From NSA/NIST(IBM). Despite being the founding of modern crypto it is no longer used as it can be easily brute forced with short keys. 56 Bits
 Rivest, Shamir, Adelman. 197, patented in 1983, public in 2000.
 Asymmetric Cipher Block. at most 2048 bit blocks
@@ -109,11 +110,7 @@ shift rows of state.
 Use formulas to replace columns. Complex matrix algorithm. A column is a column of the 4x4 matrix.
 * Add round key
 xor bits of round key. first round only
-## Key Scheduling
-Key expansion or key scheduling, inital key expanded to many keys one per round, each 16 bits.
-Rotate, shift, and rcon for each round key. each round key is done the same to get the next round key. Generates 10 for 128 bit key size, 12 rounds for 192 key size, 14 for 256 bits.
-### RCON
-R constant, multiplication involving a bunch of constants.
+
 # Ceaser cipher
 is most likely the first know encryption method, from around 50bc. The alphabet is shifted by X number of character in the alphabet ie A->C is a 2 shift. The key is number of shifts.
 Can be broken with brute force, at most 25 attempts.
@@ -142,7 +139,7 @@ It has an internal state then it shuffles the internal 256 bytes state. Parts of
 * Step 1: KSA - key scheduling algorithm, the key is mixed with an internal 2048 bit state (256 bytes)
 * Step 2: PRGA - Pseudo random generation algorithm that produces a large number of random 8 bit numbers.
 Used in WEP, WPA, BitTorrent, PDF, ect... Banned for SSL/TLS (was used in the early days). FTP never used RC-4 and instead uses ssl.
-## KSA
+# KSA
 S is an array of bytes
 ~~~
 for i 0 -> 255 {
@@ -153,7 +150,7 @@ for i 0 -> 255{
 	swap values of s[i] and s[j]
 }
 ~~~
-## PRGA
+# PRGA
 S is an array of bytes and it generates byte, 8 bits at a time.
 ```
 while generating{
