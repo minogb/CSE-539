@@ -26,22 +26,17 @@ Methods
 * Merkel's Key Exchange - a proof of work key is created with puzzles, each key is one use
 * Diffie Helmen Key Exchange - each share g^(x or y) and keep the x or y secret. the key is g^(xy) a sniffer can only calculate g^(x+y)
 * Elliptic Curve Cryptography - values on an curve are shared and calculated such that  it is impossible to reverse calculate the original points from the shared points
-* RSA
-* DES
-* MD5
-* AES
-* SHA
-* ECB
-* CBC
-
-Kerkhof's principles
-Rainbow Tables
+* RSA - public/private key encryption similar to DH
+* DES - Data Encryption Standard - Symmetric key algorithm - short key length of 56 bits. Developed primarily for hardware
+* MD5 - Message Digest - 128 bit hash with block sizes of 512 bit. First collision found in 2010
+* AES - Advanced Encryption Standard - Block cypher, 128/192/256 key sizes with 10/12/14 rounds with an output of 128 bits. Uses key expansion to generate of round key - 4x4 matrixes of 8 bit subblocks
+* SHA - Secure Hash Algorithm - SHA1 160 bit hash based on MD5. SHA2 (sha256/512), SHA-3 different from the other two
+* ECB - Electronic Code Book - Based on physical code books, each block is encrypted separately 
+* CBC - Cipher Block Channing - Take a block and xor with init vector and then encrypt it with a key then use that block output to xor it with the next block as the init vector.
 Random numbers. Secure in 2^128 bit plus
-CSPRNG
-Prime numbers
-Co Prime Numbers
-NIST 800-90A
-DRGB
-Hash DRGB
-HMAC DRGB
-RSA
+CSPRNG - Cryptographically secure pseudorandom number generator
+Co Prime Numbers - Two numbers that shore not common devisor
+NIST 800-90A -  Recommendation for Random Number Generation Using Deterministic Random Bit Generators
+- Hash DRGB - Keyed hash data
+- HMAC DRGB - Hash-based Message Authentication Code
+DRGB - Deterministic Random Bit Generator
