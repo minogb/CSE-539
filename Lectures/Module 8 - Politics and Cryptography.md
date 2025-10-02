@@ -29,3 +29,26 @@ To get both:
 - Use MAC
 - How do you authenticate
 # Detect MITM with DH
+OTR - off the record protocol
+Signal - Open Whisper System, PIDGIN, ?Whatsapp?
+AKE - Authenticated Key Exchange
+Alice -> encrypte with r (g^a) to bob
+and bob sends g^b
+where r is a random number
+Alice sends to bob R clear text, Encrypted shared secrete (public A, signature A)
+Bob sends to allice a similar message
+
+After all this complete a MITM detection.
+- Socialist Millionaire Problem
+	- Millionaire Problem (compare each others wealth without sharing how much money they have)
+Socialist Millionaire problem is to compare each other and only find out if they are equally wealthy
+mix up a table of created values generated from a preshared secrete to share with each other. This shared secrete is only used to verify each other not for messaging. that way it maintains plausible deniability
+# Secure Elections
+Rules:
+- Only authorized voters can vote
+- No multiple vote
+- Voter ID
+- Voter ID and vote should not be correlated
+- No one can change vote
+- Every vote is counted
+Hard to accomplish more security electronically as the electronic introduces more issues than it solves
