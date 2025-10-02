@@ -34,10 +34,14 @@ repeat test for a bunch of a values
 --------
 Generating Private/public keys
 Extended Euclidean Algorithm (GCD)
-GCD of two numbers p and q is = x * p + y * x
+GCD of two numbers p and q is = x * p + y * q
 where x and y are the output values
 if you subsite q(n) for p and e for q in above then
 GCD(q(n),e) = x * q(n) + y * e
 1 = x * q(n) + y * e
 1 = y * e mod q(n)
 y is d
+
+
+Extended Euclidean Algorithm
+ax + by = gcd(a, b)
